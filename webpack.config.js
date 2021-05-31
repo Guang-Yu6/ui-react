@@ -9,7 +9,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist/lib'),
-        library: 'FUI',
+        library: 'my-ui',
         libraryTarget: 'umd',
     },
     module: {
@@ -17,6 +17,14 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader'
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-sprite-loader',
+            },
+            {
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
     },
