@@ -23,7 +23,7 @@ export default function () {
       {/*分割线------------------------*/}
 
       <div>
-        <div style={{position:'relative',zIndex:9,border:'1px solid red',color:'red'}}>
+        <div style={{position:'relative',zIndex:9,border:'1px solid pink',color:'pink'}}>
         <h1>example 2</h1>
         {/*点击后取反*/}
         <button onClick={() => setY(!y)}>click</button>

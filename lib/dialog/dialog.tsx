@@ -1,4 +1,5 @@
-import React, {Fragment,ReactElement} from 'react';
+import React, {Fragment, ReactElement} from 'react';
+import ReactDOM from 'react-dom';
 import './dialog.scss';
 import Icon from '../icon/icon';
 
@@ -6,7 +7,7 @@ interface Props {
   visible: boolean;
   buttons: Array<ReactElement>;
   onClose: React.MouseEventHandler;
-  onMask?:boolean;
+  onMask?: boolean;
 }
 
 function x(name?: string) {
@@ -19,16 +20,13 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
     props.onClose(e);
   };
 
-  const onClickMask:React.MouseEventHandler = (e) =>{
-    if (props.onMask){
+  const onClickMask: React.MouseEventHandler = (e) => {
+    if (props.onMask) {
       props.onClose(e);
     }
-  }
+  };
 
-
-
-  return (
-    props.visible ?
+  const w = props.visible ?
       <Fragment>
         <div className={x('mask')} onClick={onClickMask}>
         </div>
@@ -53,12 +51,14 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
         </div>
       </Fragment>
       :
-      null
+      null;
+  return (
+    ReactDOM.createPortal(w,document.body)
   );
 };
 
 Dialog.defaultProps = {
-  onMask:false
-}
+  onMask: false
+};
 
 export default Dialog;
