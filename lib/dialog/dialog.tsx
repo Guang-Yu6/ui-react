@@ -1,25 +1,40 @@
-import React, {Fragment} from 'react';
+import React, {Fragment,ReactElement} from 'react';
 import './dialog.scss';
 import Icon from '../icon/icon';
 
 interface Props {
-  visible: boolean
+  visible: boolean;
+  buttons: Array<ReactElement>;
+  onClose: React.MouseEventHandler;
+  onMask?:boolean;
 }
 
-function x (name?:string) {
+function x(name?: string) {
   return `mui-dialog${name ? '-' + name : ''}`;
 }
 
 
 const Dialog: React.FunctionComponent<Props> = (props) => {
+  const onClickClose: React.MouseEventHandler = (e) => {
+    props.onClose(e);
+  };
+
+  const onClickMask:React.MouseEventHandler = (e) =>{
+    if (props.onMask){
+      props.onClose(e);
+    }
+  }
+
+
+
   return (
     props.visible ?
       <Fragment>
-        <div className={x('mask')}>
+        <div className={x('mask')} onClick={onClickMask}>
         </div>
 
         <div className={x()}>
-          <div className={x('close')}>
+          <div className={x('close')} onClick={onClickClose}>
             <Icon name='gb'/>
           </div>
 
@@ -32,8 +47,8 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
           </main>
 
           <footer className={x('footer')}>
-            <button>ok</button>
-            <button>关闭</button>
+            {props.buttons.map((button, index) =>
+              React.cloneElement(button, {key: index}))}
           </footer>
         </div>
       </Fragment>
@@ -41,5 +56,9 @@ const Dialog: React.FunctionComponent<Props> = (props) => {
       null
   );
 };
+
+Dialog.defaultProps = {
+  onMask:false
+}
 
 export default Dialog;
